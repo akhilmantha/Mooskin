@@ -37,7 +37,7 @@ class NoteDetailsViewController: UIViewController {
     }
 }
 
-// -----------------------------------------------------------------------------
+
 // MARK: - Editing
 
 extension NoteDetailsViewController {
@@ -53,7 +53,7 @@ extension NoteDetailsViewController {
     }
 }
 
-// -----------------------------------------------------------------------------
+
 // MARK: - UITextViewDelegate
 
 extension NoteDetailsViewController: UITextViewDelegate {

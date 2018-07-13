@@ -39,14 +39,14 @@ class NotesListViewController: UIViewController, UITableViewDataSource {
         }
     }
 
-    // -------------------------------------------------------------------------
+   
     // MARK: - Actions
 
     @IBAction func addTapped(sender: Any) {
         addNote()
     }
 
-    // -------------------------------------------------------------------------
+  
     // MARK: - Editing
 
     // Adds a new `Note` to the end of the `notebook`'s `notes` array
@@ -75,7 +75,7 @@ class NotesListViewController: UIViewController, UITableViewDataSource {
         tableView.setEditing(editing, animated: animated)
     }
 
-    // -------------------------------------------------------------------------
+    
     // MARK: - Table view data source
 
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -112,7 +112,7 @@ class NotesListViewController: UIViewController, UITableViewDataSource {
         return notebook.notes[indexPath.row]
     }
 
-    // -------------------------------------------------------------------------
+   
     // MARK: - Navigation
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

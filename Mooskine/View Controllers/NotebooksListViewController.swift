@@ -31,18 +31,17 @@ class NotebooksListViewController: UIViewController, UITableViewDataSource {
         }
     }
 
-    // -------------------------------------------------------------------------
+    
     // MARK: - Actions
 
     @IBAction func addTapped(sender: Any) {
         presentNewNotebookAlert()
     }
 
-    // -------------------------------------------------------------------------
     // MARK: - Editing
 
     /// Display an alert prompting the user to name a new notebook. Calls
-    /// `addNotebook(name:)`.
+    
     func presentNewNotebookAlert() {
         let alert = UIAlertController(title: "New Notebook", message: "Enter a name for this notebook", preferredStyle: .alert)
 
@@ -99,7 +98,7 @@ class NotebooksListViewController: UIViewController, UITableViewDataSource {
         tableView.setEditing(editing, animated: animated)
     }
 
-    // -------------------------------------------------------------------------
+ 
     // MARK: - Table view data source
 
     func numberOfSections(in tableView: UITableView) -> Int {

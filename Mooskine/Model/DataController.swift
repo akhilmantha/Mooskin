@@ -7,3 +7,12 @@
 //
 
 import Foundation
+import CoreData
+
+class DataController{
+    let persistentContainer : NSPersistentContainer
+    
+    init(modelName : String) {
+        persistentContainer = NSPersistentContainer(name: modelName)
+    }
+}

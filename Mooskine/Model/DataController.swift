@@ -1,5 +1,5 @@
 //
-//  Notebook+Extra.swift
+//  DataController.swift
 //  Mooskine
 //
 //  Created by akhil mantha on 15/07/18.
@@ -7,8 +7,3 @@
 //
 
 import Foundation
-
-extension Notebook {
-    
-    
-}

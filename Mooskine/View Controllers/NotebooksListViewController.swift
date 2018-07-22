@@ -115,8 +115,8 @@ class NotebooksListViewController: UIViewController, UITableViewDataSource {
 
         // Configure cell
         cell.nameLabel.text = aNotebook.name
-        let pageString = aNotebook.notes.count == 1 ? "page" : "pages"
-        cell.pageCountLabel.text = "\(aNotebook.notes.count) \(pageString)"
+        let pageString = aNotebook.notes?.count == 1 ? "page" : "pages"
+        cell.pageCountLabel.text = "\(aNotebook.notes?.count) \(pageString)"
 
         return cell
     }
@@ -135,8 +135,6 @@ class NotebooksListViewController: UIViewController, UITableViewDataSource {
     func notebook(at indexPath: IndexPath) -> Notebook {
         return notebooks[indexPath.row]
     }
-
-    // -------------------------------------------------------------------------
     // MARK: - Navigation
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

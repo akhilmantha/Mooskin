@@ -14,6 +14,8 @@ class NotesListViewController: UIViewController, UITableViewDataSource {
 
     /// The notebook whose notes are being displayed
     var notebook: Notebook!
+    
+    var notes:[Note] = []
 
     /// A date formatter for date text in note cells
     let dateFormatter: DateFormatter = {
@@ -51,14 +53,16 @@ class NotesListViewController: UIViewController, UITableViewDataSource {
 
     // Adds a new `Note` to the end of the `notebook`'s `notes` array
     func addNote() {
-        notebook.addNote()
+        //TO-DO addNote
+//        notebook.addNote()
         tableView.insertRows(at: [IndexPath(row: numberOfNotes - 1, section: 0)], with: .fade)
         updateEditButtonState()
     }
 
     // Deletes the `Note` at the specified index path
     func deleteNote(at indexPath: IndexPath) {
-        notebook.removeNote(at: indexPath.row)
+        //TO-DO removeNote
+//        notebook.removeNote(at: indexPath.row)
         tableView.deleteRows(at: [indexPath], with: .fade)
         if numberOfNotes == 0 {
             setEditing(false, animated: true)
@@ -92,9 +96,10 @@ class NotesListViewController: UIViewController, UITableViewDataSource {
 
         // Configure cell
         cell.textPreviewLabel.text = aNote.text
-        cell.dateLabel.text = dateFormatter.string(from: aNote.creationDate)
-
-        return cell
+        if let crationDate = aNote.creationDate{
+        cell.dateLabel.text = dateFormatter.string(from: crationDate)
+    }
+         return cell
     }
 
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
@@ -106,10 +111,10 @@ class NotesListViewController: UIViewController, UITableViewDataSource {
 
     // Helpers
 
-    var numberOfNotes: Int { return notebook.notes.count }
+    var numberOfNotes: Int { return notes.count }
 
     func note(at indexPath: IndexPath) -> Note {
-        return notebook.notes[indexPath.row]
+        return notes[indexPath.row]
     }
 
    

@@ -28,7 +28,7 @@ class NoteDetailsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        navigationItem.title = dateFormatter.string(from: note.creationDate)
+        navigationItem.title = dateFormatter.string(from: note.creationDate!)
         textView.text = note.text
     }
 

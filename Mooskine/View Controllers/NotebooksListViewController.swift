@@ -87,7 +87,8 @@ class NotebooksListViewController: UIViewController, UITableViewDataSource {
         notebook.name = name
         notebook.creationDate = Date()
         try? dataController.viewContext.save()
-        tableView.insertRows(at: [IndexPath(row: numberOfNotebooks - 1, section: 0)], with: .fade)
+        notebooks.insert(notebook, at: 0)
+        tableView.insertRows(at: [IndexPath(row: 0, section: 0)], with: .fade)
         updateEditButtonState()
     }
 

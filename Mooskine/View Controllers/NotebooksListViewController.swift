@@ -182,10 +182,14 @@ class NotebooksListViewController: UIViewController, UITableViewDataSource {
             switch type {
             case .insert:
                 tableView.insertRows(at: [newIndexPath!], with: .fade)
+                break
             case .delete:
                 tableView.deleteRows(at: [indexPath!], with: .fade)
-            default:
                 break
+            case .update:
+                tableView.reloadRows(at: [indexPath!], with: .fade)
+            case .move:
+                tableView.moveRow(at: indexPath!, to: newIndexPath!)
             }
         }
     }

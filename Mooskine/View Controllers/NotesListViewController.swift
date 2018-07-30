@@ -38,7 +38,6 @@ class NotesListViewController: UIViewController, UITableViewDataSource {
         fetchRequest.sortDescriptors = [sortDescriptor]
         if let result = try? dataController.viewContext.fetch(fetchRequest){
             notes = result
-            tableView.reloadData()
         }
         updateEditButtonState()
     }
@@ -76,8 +75,10 @@ class NotesListViewController: UIViewController, UITableViewDataSource {
 
     // Deletes the `Note` at the specified index path
     func deleteNote(at indexPath: IndexPath) {
-        //TO-DO removeNote
-//        notebook.removeNote(at: indexPath.row)
+        let noteToDelete = note(at: indexPath)
+        dataController.viewContext.delete(noteToDelete)
+        try? dataController.viewContext.save()
+        notes.remove(at: indexPath.row)
         tableView.deleteRows(at: [indexPath], with: .fade)
         if numberOfNotes == 0 {
             setEditing(false, animated: true)

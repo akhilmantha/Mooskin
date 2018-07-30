@@ -18,21 +18,25 @@ class NotebooksListViewController: UIViewController, UITableViewDataSource, NSFe
     var dataController:DataController!
     var fetchedResultsController:NSFetchedResultsController<Notebook>!
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        navigationItem.titleView = UIImageView(image: #imageLiteral(resourceName: "toolbar-cow"))
-        navigationItem.rightBarButtonItem = editButtonItem
-        
+    fileprivate func setupFetchedResultsController() {
         let fetchRequest: NSFetchRequest<Notebook> = Notebook.fetchRequest()
         let sortDescriptor = NSSortDescriptor(key: "creationDate", ascending: false)
         fetchRequest.sortDescriptors = [sortDescriptor]
         
         fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: dataController.viewContext, sectionNameKeyPath: nil, cacheName: nil)
+        fetchedResultsController.delegate = self
         do{
             try fetchedResultsController.performFetch()
         }catch{
             fatalError("The fetch couldnot be performed: \(error.localizedDescription)")
         }
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        navigationItem.titleView = UIImageView(image: #imageLiteral(resourceName: "toolbar-cow"))
+        navigationItem.rightBarButtonItem = editButtonItem
+        setupFetchedResultsController()
         reloadNotebooks()
     }
 

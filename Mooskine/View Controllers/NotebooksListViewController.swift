@@ -94,8 +94,9 @@ class NotebooksListViewController: UIViewController, UITableViewDataSource {
 
     /// Deletes the notebook at the specified index path
     func deleteNotebook(at indexPath: IndexPath) {
-        notebooks.remove(at: indexPath.row)
-        tableView.deleteRows(at: [indexPath], with: .fade)
+        let notebookToDelete = notebook(at: indexPath)
+        dataController.viewContext.delete(notebookToDelete)
+        try? dataController.viewContext.save()
         if numberOfNotebooks == 0 {
             setEditing(false, animated: true)
         }

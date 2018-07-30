@@ -20,11 +20,29 @@ class DataController{
         persistentContainer = NSPersistentContainer(name: modelName)
     }
     
-    func load() {
+    func load(completion: (()->Void)? = nil) {
         persistentContainer.loadPersistentStores{storeDescription, error in
             guard error == nil else{
                 fatalError(error!.localizedDescription)
             }
+            self.autoSaveViewContext()
+            completion?()
     }
 }
+}
+
+extension DataController{
+    func autoSaveViewContext(interval: TimeInterval = 30){
+        guard interval > 0 else{
+            print("autosaving")
+            print("cannot set negative time intervals!")
+            return
+        }
+        if viewContext.hasChanges{
+            try? viewContext.save()
+        }
+        DispatchQueue.main.asyncAfter(deadline: .now() + interval) {
+            self.autoSaveViewContext(interval: interval)
+        }
+    }
 }

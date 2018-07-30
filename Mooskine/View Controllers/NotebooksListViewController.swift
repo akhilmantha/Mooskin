@@ -9,19 +9,30 @@
 import UIKit
 import CoreData
 
-class NotebooksListViewController: UIViewController, UITableViewDataSource {
+class NotebooksListViewController: UIViewController, UITableViewDataSource, NSFetchedResultsControllerDelegate {
     /// A table view that displays a list of notebooks
     @IBOutlet weak var tableView: UITableView!
 
     /// The `Notebook` objects being presented
     var notebooks: [Notebook] = []
-    
     var dataController:DataController!
+    var fetchedResultsController:NSFetchedResultsController<Notebook>!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationItem.titleView = UIImageView(image: #imageLiteral(resourceName: "toolbar-cow"))
         navigationItem.rightBarButtonItem = editButtonItem
+        
+        let fetchRequest: NSFetchRequest<Notebook> = Notebook.fetchRequest()
+        let sortDescriptor = NSSortDescriptor(key: "creationDate", ascending: false)
+        fetchRequest.sortDescriptors = [sortDescriptor]
+        
+        fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: dataController.viewContext, sectionNameKeyPath: nil, cacheName: nil)
+        do{
+            try fetchedResultsController.performFetch()
+        }catch{
+            fatalError("The fetch couldnot be performed: \(error.localizedDescription)")
+        }
         reloadNotebooks()
     }
 
@@ -32,6 +43,11 @@ class NotebooksListViewController: UIViewController, UITableViewDataSource {
             tableView.deselectRow(at: indexPath, animated: false)
             tableView.reloadRows(at: [indexPath], with: .fade)
         }
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        fetchedResultsController = nil
     }
 
     

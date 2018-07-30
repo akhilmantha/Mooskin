@@ -15,9 +15,9 @@ class NotesListViewController: UIViewController, UITableViewDataSource {
 
     /// The notebook whose notes are being displayed
     var notebook: Notebook!
-    
     var notes:[Note] = []
     var dataController:DataController!
+    var fetchedResultsController: NSFetchedResultsController<Note>!
 
     /// A date formatter for date text in note cells
     let dateFormatter: DateFormatter = {
@@ -25,20 +25,13 @@ class NotesListViewController: UIViewController, UITableViewDataSource {
         df.dateStyle = .medium
         return df
     }()
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         navigationItem.title = notebook.name
         navigationItem.rightBarButtonItem = editButtonItem
-        let fetchRequest: NSFetchRequest<Note> = Note.fetchRequest()
-        let predicate = NSPredicate(format: "notebook == %@", notebook)
-        fetchRequest.predicate = predicate
-        let sortDescriptor = NSSortDescriptor(key: "creationDate", ascending: false)
-        fetchRequest.sortDescriptors = [sortDescriptor]
-        if let result = try? dataController.viewContext.fetch(fetchRequest){
-            notes = result
-        }
+        setupFetchedResultsController()
         updateEditButtonState()
     }
 
@@ -132,6 +125,17 @@ class NotesListViewController: UIViewController, UITableViewDataSource {
     func note(at indexPath: IndexPath) -> Note {
         return notes[indexPath.row]
     }
+    
+    fileprivate func setupFetchedResultsController() {
+        let fetchRequest: NSFetchRequest<Note> = Note.fetchRequest()
+        let predicate = NSPredicate(format: "notebook == %@", notebook)
+        fetchRequest.predicate = predicate
+        let sortDescriptor = NSSortDescriptor(key: "creationDate", ascending: false)
+        fetchRequest.sortDescriptors = [sortDescriptor]
+        if let result = try? dataController.viewContext.fetch(fetchRequest){
+            notes = result
+        }
+    }
 
    
     // MARK: - Navigation
@@ -153,4 +157,8 @@ class NotesListViewController: UIViewController, UITableViewDataSource {
             }
         }
     }
+}
+
+extension NotesListViewController: NSFetchedResultsControllerDelegate{
+    
 }
